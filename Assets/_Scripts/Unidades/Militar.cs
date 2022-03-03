@@ -8,7 +8,20 @@ public class Militar : Persona
     private int attackRange;
 
     //Constructor militar
-    public Militar(string n, int puntosAtaque){
+    public Militar(string n, int puntosAtaque){ //
+        Nacer();
+        velocidadMov = 40;
+        nombre = n;
+        Debug.Log("Creado Militar" + nombre);
+        vida_total = 500;
+        vida_actual = vida_total;
+        attackPower = puntosAtaque;
+    }
+
+
+    //Manera de poner atributos por defecto.EJEMPLO ATAQUE
+/*
+    public Militar(string n, int puntosAtaque = 10){ 
         Nacer();
         velocidadMov = 40;
         nombre = n;
@@ -16,7 +29,9 @@ public class Militar : Persona
         vida_total = 500;
         vida_actual = vida_total;
         attackPower = 10;
+        attackPower = puntosAtaque;
     }
+*/
 
     public int Atacar(){
         if(!viva){
