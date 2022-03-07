@@ -93,32 +93,61 @@ public class Main : MonoBehaviour
         
         // 2.Asignar a los militares la accion atacar. Seleccionar aleatoriamente los 3 militares para que ataquen
         // A mayores opcion donde el que empiece a atacar sea aleatorio
-        int opcion = Random.Range(0,2);
+
+
+        /*
+            int opcion = Random.Range(0,2);
+
+        if(opcion == 1){
+            aldeanoAzul[0].SerAtacado(militaresRojo[Random.Range(0,militaresRojo.Count)].Atacar());
+        }
+
         while(aldeanoRojo[0].EstaVivo() && aldeanoAzul[0].EstaVivo()){
+            aldeanoAzul[0].SerAtacado(militaresRojo[Random.Range(0,militaresRojo.Count)].Atacar());
+            if(! aldeanoAzul[0].EstaVivo()){
+                Debug.Log("Ganó el rojo");
+                break;
+            }
 
-            if(opcion == 1){
-                aldeanoAzul[0].SerAtacado(militaresRojo[Random.Range(0,militaresRojo.Count)].Atacar());
-                if(! aldeanoAzul[0].EstaVivo()){
-                    Debug.Log("Ganó el rojo");
-                    break;
-                }
+            aldeanoRojo[0].SerAtacado(militaresAzul[Random.Range(0,militaresAzul.Count)].Atacar()); 
+            if(! aldeanoRojo[0].EstaVivo()){
+                Debug.Log("Ganó el azul");
+                break;
+            }
+            
+        }
+        */
 
-                aldeanoRojo[0].SerAtacado(militaresAzul[Random.Range(0,militaresAzul.Count)].Atacar());
-                if(! aldeanoRojo[0].EstaVivo()){
-                    Debug.Log("Ganó el azul");
-                    break;
-                }
-            } else {
-                aldeanoRojo[0].SerAtacado(militaresAzul[Random.Range(0,militaresAzul.Count)].Atacar());
-                if(! aldeanoRojo[0].EstaVivo()){
-                    Debug.Log("Ganó el azul");
-                    break;
-                }
-                aldeanoAzul[0].SerAtacado(militaresRojo[Random.Range(0,militaresRojo.Count)].Atacar());
-                if(! aldeanoAzul[0].EstaVivo()){
-                    Debug.Log("Ganó el rojo");
-                    break;
-                }
+
+        int atacante = Random.Range(0,2);
+        int defensor;
+        if(atacante== 0){
+            defensor = 1;
+        }else{
+            defensor = 0;
+        }
+
+
+        List<List<Aldeano>> aldeanos = new List<List<Aldeano>>();
+        aldeanos.Add(aldeanoAzul);
+        aldeanos.Add(aldeanoRojo);
+
+        List<List<Militar>> militares = new List<List<Militar>>();
+        militares.Add(militaresAzul);
+        militares.Add(militaresRojo);
+        
+        while(aldeanoRojo[0].EstaVivo() && aldeanoAzul[0].EstaVivo()){
+            
+            if(! MilitarAtacaAldeano(militares[atacante][Random.Range(0,militaresRojo.Count)], aldeanos[defensor][0])){
+                Debug.Log("Ganó el rojo");
+                break;
+            }
+
+            atacante= defensor;
+            if(atacante== 0){
+                defensor = 1;
+            }else{
+                defensor = 0;
             }
             
         }
@@ -127,4 +156,20 @@ public class Main : MonoBehaviour
 
     }
 
+
+    private bool MilitarAtacaAldeano(Militar m, Aldeano a){
+        a.SerAtacado(m.Atacar());
+        return a.EstaVivo();
+
+        // Otra opcion sería:
+        /*
+        if(! a.EstaVivo()){
+            Debug.Log("Ganó el " + b);
+            return false;
+        }else{
+            return true;
+        }
+        */
+        
+    }
 }
