@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Militar : Persona
 {
-    private int attackPower;
-    private int attackRange;
+    protected int attackPower;
+    protected int attackRange;
 
     //Constructor militar
-    public Militar(string n, int puntosAtaque){ //
+    /* public Militar(string n, int puntosAtaque){ //
         Nacer();
         velocidadMov = 40;
         nombre = n;
@@ -17,6 +17,7 @@ public class Militar : Persona
         vida_actual = vida_total;
         attackPower = puntosAtaque;
     }
+    */
 
 
     //Manera de poner atributos por defecto.EJEMPLO ATAQUE
