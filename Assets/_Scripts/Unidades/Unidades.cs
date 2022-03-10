@@ -9,7 +9,21 @@ public abstract class Unidades : MonoBehaviour
     private Vector3 dimensiones;
     private Vector3 vision;
     protected bool viva;
-    
+    protected string nombre;
+
+        public static List<string> ListaNombre= new List<string>(){   // Ponemos static para esté solo en la clase y no se repitan en los objetos creados
+        "Elias",
+        "Carlos",
+        "Juan",
+        "Alfredo",
+        "Santiago",
+        "Lucas",
+        "Pedro",
+        "Ana",
+        "Fran",
+        "Manuel",
+        "Bebeto"
+    };
 
     public string SerAtacado(int poderAtaque){
         vida_actual = vida_actual - poderAtaque;
@@ -21,7 +35,7 @@ public abstract class Unidades : MonoBehaviour
 
     public string Nacer(){
         viva = true;
-        Debug.Log("He nacido");
+        Debug.Log("Ha nacido " + nombre);
         return "nací";
     }
 
@@ -29,7 +43,7 @@ public abstract class Unidades : MonoBehaviour
     // Si la vida_actual = 0, destruyes el objeto
     public string Morir(){
         viva = false;
-        Debug.Log("He muerto");
+        Debug.Log(nombre + " Ha muerto");
         return "He muerto";
     }
 

@@ -38,7 +38,7 @@ public class Militar : Persona
         if(!viva){
             return 0;
         }
-        Debug.Log(nombre + "Atacó con " + attackPower);
+        Debug.Log(nombre + " Atacó con " + attackPower);
         return attackPower;
     }
 

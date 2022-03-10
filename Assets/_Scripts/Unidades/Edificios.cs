@@ -6,11 +6,12 @@ public class Edificios : PC
 {
     private string tipo;
 
-    public Edificios(){
-        Nacer();
-        Debug.Log("Creado Edificio");
+    public Edificios(string n){
         vida_total = 500;
         vida_actual = vida_total;
+        nombre = n;
+        Debug.Log("Creado Edificio " + nombre);
+        Nacer();
     }
 
 }

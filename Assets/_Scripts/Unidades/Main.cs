@@ -62,7 +62,7 @@ public class Main : MonoBehaviour
 
 
         // 1. crear 4 listas de tipo object
-/*
+        /*
         //string nombreAleatorio = Persona.ListaNombre[Random.Range(0,Persona.ListaNombre.Count)];
         List<Aldeano> aldeanoRojo = new List<Aldeano>(){
             new Aldeano("Carlos")
@@ -89,7 +89,7 @@ public class Main : MonoBehaviour
         for(int i=0; i<3; i++){
             militaresAzul.Add(new Militar(Persona.ListaNombre[Random.Range(0,Persona.ListaNombre.Count)],(i+1)* 10));
         } 
-*/ 
+        */ 
         
         // 2.Asignar a los militares la accion atacar. Seleccionar aleatoriamente los 3 militares para que ataquen
         // A mayores opcion donde el que empiece a atacar sea aleatorio
@@ -118,7 +118,7 @@ public class Main : MonoBehaviour
         }
         */
 
-/*
+        /*
         int atacante = Random.Range(0,2);
         int defensor;
         if(atacante== 0){
@@ -152,7 +152,7 @@ public class Main : MonoBehaviour
             
         }
 
-   */    
+    */    
 
 
    // Ejercicio final: Crear dos listas,uno del equipo rojo y otro del azul.
@@ -166,30 +166,89 @@ public class Main : MonoBehaviour
     // Cada unidad de tiempo, atacará un de los dos equipos aleatoriamente.
     // Imprimir por pantalla lo que pasa y quien gana.
 
+        
 
-    List<Unidades> equipoRojo = new List<Unidades>(){
-        new Arquero(Persona.ListaNombre[Random.Range(0,Persona.ListaNombre.Count)]),
-        new Guerrero(Persona.ListaNombre[Random.Range(0,Persona.ListaNombre.Count)]),
-        new Aldeano(Persona.ListaNombre[Random.Range(0,Persona.ListaNombre.Count)]),
-        new Aldeano(Persona.ListaNombre[Random.Range(0,Persona.ListaNombre.Count)]),
-        new Edificios()
-    };
-     
-    List<Unidades> equipoAzul = new List<Unidades>(){
-        new Arquero(Persona.ListaNombre[Random.Range(0,Persona.ListaNombre.Count)]),
-        new Guerrero(Persona.ListaNombre[Random.Range(0,Persona.ListaNombre.Count)]),
-        new Aldeano(Persona.ListaNombre[Random.Range(0,Persona.ListaNombre.Count)]),
-        new Aldeano(Persona.ListaNombre[Random.Range(0,Persona.ListaNombre.Count)]),
-        new Edificios()
-    };
+        List<Unidades> equipoRojo = new List<Unidades>(){
+            new Arquero(Persona.ListaNombre[Random.Range(0,Persona.ListaNombre.Count)] + " del equipo rojo"),
+            new Guerrero(Persona.ListaNombre[Random.Range(0,Persona.ListaNombre.Count)] + " del equipo rojo"),
+            new Aldeano(Persona.ListaNombre[Random.Range(0,Persona.ListaNombre.Count)]+ " del equipo rojo"),
+            new Aldeano(Persona.ListaNombre[Random.Range(0,Persona.ListaNombre.Count)]+ " del equipo rojo"),
+            new Edificios(Persona.ListaNombre[Random.Range(0,Persona.ListaNombre.Count)]+ " del equipo rojo"),
+        };
+        
+        List<Unidades> equipoAzul = new List<Unidades>(){
+            new Arquero(Persona.ListaNombre[Random.Range(0,Persona.ListaNombre.Count)]+ " del equipo azul"),
+            new Guerrero(Persona.ListaNombre[Random.Range(0,Persona.ListaNombre.Count)]+ " del equipo azul"),
+            new Aldeano(Persona.ListaNombre[Random.Range(0,Persona.ListaNombre.Count)]+ " del equipo azul"),
+            new Aldeano(Persona.ListaNombre[Random.Range(0,Persona.ListaNombre.Count)]+ " del equipo azul"),
+            new Edificios(Persona.ListaNombre[Random.Range(0,Persona.ListaNombre.Count)]+ " del equipo azul"),
+        };
 
-    equipoRojo[Random.Range(0,5)].SerAtacado(equipoAzul[Random.Range(0,2)].Atacar());
+        
+
+            //((Militar) equipoRojo[Random.Range(0,2)]).Atacar(); // Se hace cast convitiendo el elemento en militar(por defecto está en unidades)
+
+
+        int opcion = Random.Range(0,2);
+
+        while(equipoAzul[Random.Range(0,2)].EstaVivo() && equipoRojo[Random.Range(0,2)].EstaVivo()){
+
+            //Equipo azul es atacado
+            int ataqueRojo = ((Militar) equipoRojo[Random.Range(0,2)]).Atacar();
+            equipoAzul[Random.Range(0,equipoAzul.Count)].SerAtacado(ataqueRojo);
+
+            //Equipo rojo es atacado
+            int ataqueAzul = ((Militar) equipoAzul[Random.Range(0,2)]).Atacar();
+            equipoRojo[Random.Range(0,equipoRojo.Count)].SerAtacado(ataqueAzul);
+            
+            //Equipo azul
+            if(! equipoAzul[0].EstaVivo()){
+                //Notificacion de lo que pasa
+                Debug.Log("Arquero azul ha muerto");
+                // Salta turno
+            }
+            if(! equipoAzul[1].EstaVivo()){
+                Debug.Log("Guerrero azul ha muerto");
+            }
+            if(! equipoAzul[0].EstaVivo() && ! equipoAzul[1].EstaVivo()){
+                Debug.Log("Ha ganado el equipo rojo");
+                break;
+            }
+
+            if(! equipoAzul[2].EstaVivo() && ! equipoAzul[3].EstaVivo()){
+                Debug.Log("Aldeanos azules han muerto");
+            }
+
+            if(! equipoAzul[4].EstaVivo()){
+                Debug.Log("Edificio azul derrotado");
+            }
 
 
 
 
+            // Equipo Rojo
+            if(! equipoRojo[0].EstaVivo()){
+                Debug.Log("Arquero rojo ha muerto");
+            }
+            if(! equipoRojo[1].EstaVivo()){
+                Debug.Log("Guerrero rojo ha muerto");
+            }
+            if(! equipoRojo[1].EstaVivo() && ! equipoRojo[2].EstaVivo()){
+                Debug.Log("Ha ganado el equipo azul");
+                break;
+            }
+            if(! equipoRojo[2].EstaVivo() && ! equipoRojo[3].EstaVivo()){
+                Debug.Log("Aldeanos rojos han muerto");
+            }
+            if(! equipoRojo[4].EstaVivo()){
+                Debug.Log("Edificio rojo derrotado");
+            }
+            
+        }
 
     }
+
+  
 
 
    // private bool MilitarAtacaAldeano(Militar m, Aldeano a){
