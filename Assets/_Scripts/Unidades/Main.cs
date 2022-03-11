@@ -191,61 +191,43 @@ public class Main : MonoBehaviour
 
         int opcion = Random.Range(0,2);
 
-        while(equipoAzul[Random.Range(0,2)].EstaVivo() && equipoRojo[Random.Range(0,2)].EstaVivo()){
+        while(EstaMuerto((Militar)equipoAzul[0]) && EstaMuerto((Militar)equipoAzul[1]) || EstaMuerto((Militar)equipoRojo[0]) && EstaMuerto((Militar)equipoRojo[1])){
 
-            //Equipo azul es atacado
-            int ataqueRojo = ((Militar) equipoRojo[Random.Range(0,2)]).Atacar();
-            equipoAzul[Random.Range(0,equipoAzul.Count)].SerAtacado(ataqueRojo);
-
-            //Equipo rojo es atacado
-            int ataqueAzul = ((Militar) equipoAzul[Random.Range(0,2)]).Atacar();
-            equipoRojo[Random.Range(0,equipoRojo.Count)].SerAtacado(ataqueAzul);
             
-            //Equipo azul
-            if(! equipoAzul[0].EstaVivo()){
-                //Notificacion de lo que pasa
-                Debug.Log("Arquero azul ha muerto");
-                // Salta turno
+            //Equipo azul es atacado si los rojos aun estan vivos
+            if(equipoRojo[0].EstaVivo() && equipoRojo[1].EstaVivo()){
+                equipoAzul[Random.Range(0,equipoAzul.Count)].SerAtacado(((Militar) equipoRojo[Random.Range(0,2)]).Atacar());
+            }           
+
+            //Equipo rojo es atacado si los azules estan vivos
+            if(equipoAzul[0].EstaVivo() && equipoAzul[1].EstaVivo()){
+                equipoRojo[Random.Range(0,equipoRojo.Count)].SerAtacado(((Militar) equipoAzul[Random.Range(0,2)]).Atacar());
             }
-            if(! equipoAzul[1].EstaVivo()){
-                Debug.Log("Guerrero azul ha muerto");
-            }
+            
+            
+            //Equipo azul            
+            // Si mueren militares azules gana equipo rojo
             if(! equipoAzul[0].EstaVivo() && ! equipoAzul[1].EstaVivo()){
                 Debug.Log("Ha ganado el equipo rojo");
                 break;
             }
 
-            if(! equipoAzul[2].EstaVivo() && ! equipoAzul[3].EstaVivo()){
-                Debug.Log("Aldeanos azules han muerto");
-            }
 
-            if(! equipoAzul[4].EstaVivo()){
-                Debug.Log("Edificio azul derrotado");
-            }
-
-
-
-
-            // Equipo Rojo
-            if(! equipoRojo[0].EstaVivo()){
-                Debug.Log("Arquero rojo ha muerto");
-            }
-            if(! equipoRojo[1].EstaVivo()){
-                Debug.Log("Guerrero rojo ha muerto");
-            }
+            // Equipo Rojo         
+            // Si mueren militares rojos gana equipo azul
             if(! equipoRojo[1].EstaVivo() && ! equipoRojo[2].EstaVivo()){
                 Debug.Log("Ha ganado el equipo azul");
                 break;
             }
-            if(! equipoRojo[2].EstaVivo() && ! equipoRojo[3].EstaVivo()){
-                Debug.Log("Aldeanos rojos han muerto");
-            }
-            if(! equipoRojo[4].EstaVivo()){
-                Debug.Log("Edificio rojo derrotado");
-            }
             
         }
 
+
+    }
+
+    // Creacion de metodo donde se sepa si los militares están muertos
+    private bool EstaMuerto(Militar m){
+        return m.EstaVivo();    
     }
 
   
