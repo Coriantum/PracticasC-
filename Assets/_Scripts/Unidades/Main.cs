@@ -173,7 +173,7 @@ public class Main : MonoBehaviour
             new Guerrero(Persona.ListaNombre[Random.Range(0,Persona.ListaNombre.Count)] + " del equipo rojo"),
             new Aldeano(Persona.ListaNombre[Random.Range(0,Persona.ListaNombre.Count)]+ " del equipo rojo"),
             new Aldeano(Persona.ListaNombre[Random.Range(0,Persona.ListaNombre.Count)]+ " del equipo rojo"),
-            new Edificios(Persona.ListaNombre[Random.Range(0,Persona.ListaNombre.Count)]+ " del equipo rojo"),
+            new Edificios("Casa del equipo rojo"),
         };
         
         List<Unidades> equipoAzul = new List<Unidades>(){
@@ -181,52 +181,69 @@ public class Main : MonoBehaviour
             new Guerrero(Persona.ListaNombre[Random.Range(0,Persona.ListaNombre.Count)]+ " del equipo azul"),
             new Aldeano(Persona.ListaNombre[Random.Range(0,Persona.ListaNombre.Count)]+ " del equipo azul"),
             new Aldeano(Persona.ListaNombre[Random.Range(0,Persona.ListaNombre.Count)]+ " del equipo azul"),
-            new Edificios(Persona.ListaNombre[Random.Range(0,Persona.ListaNombre.Count)]+ " del equipo azul"),
+            new Edificios("Casa del equipo azul"),
         };
 
         
 
             //((Militar) equipoRojo[Random.Range(0,2)]).Atacar(); // Se hace cast convitiendo el elemento en militar(por defecto está en unidades)
 
+         // Opcion 2: Si estan todos muertos
+         // while(! TodosMuertos(equipoRojo) || ! TodosMuertos(equipoAzul))
 
-        while(EstaMuerto((Militar)equipoAzul[0]) && EstaMuerto((Militar)equipoAzul[1]) || EstaMuerto((Militar)equipoRojo[0]) && EstaMuerto((Militar)equipoRojo[1])){ // Condicion: Que no estén muertos los militares
+        int opcion;
+        while(EstaMuerto((Militar)equipoAzul[0]) && EstaMuerto((Militar)equipoAzul[1]) && EstaMuerto((Militar)equipoRojo[0]) && EstaMuerto((Militar)equipoRojo[1])){ // Condicion: Que no estén muertos los militares
 
-            int opcion = Random.Range(0,2); // Variable que contenga un random. Dicho random tendrá un resultado diferente cada vez que recorra el while.
+            opcion = Random.Range(0,2); // Variable que contenga un random. Dicho random tendrá un resultado diferente cada vez que recorra el while.
+            Unidades defensa;
+            Militar ataque;
 
             //Equipo azul es atacado si los rojos aun estan vivos. Se ejecutará en caso de que la variable opcion sea la indicada 
-            if(equipoRojo[0].EstaVivo() && equipoRojo[1].EstaVivo() && opcion == 1){
-                equipoAzul[Random.Range(0,equipoAzul.Count)].SerAtacado(((Militar) equipoRojo[Random.Range(0,2)]).Atacar());
-            }           
+            if(opcion == 1){
+                defensa = equipoAzul[Random.Range(0,equipoAzul.Count)];
+                ataque = ((Militar) equipoRojo[Random.Range(0,2)]);
 
+                //equipoAzul[Random.Range(0,equipoAzul.Count)].SerAtacado(((Militar) equipoRojo[Random.Range(0,2)]).Atacar()); Otra opcion
+            }           
             //Equipo rojo es atacado si los azules estan vivos
-            if(equipoAzul[0].EstaVivo() && equipoAzul[1].EstaVivo() && opcion == 0){
-                equipoRojo[Random.Range(0,equipoRojo.Count)].SerAtacado(((Militar) equipoAzul[Random.Range(0,2)]).Atacar());
+            else{
+                defensa = equipoRojo[Random.Range(0,equipoAzul.Count)];
+                ataque = ((Militar) equipoAzul[Random.Range(0,2)]);
             }
+            defensa.SerAtacado(ataque.Atacar());          
             
-            
-            //Equipo azul            
+        }
+
+        //Equipo azul            
             // Si mueren militares azules gana equipo rojo
             if(! equipoAzul[0].EstaVivo() && ! equipoAzul[1].EstaVivo()){
                 Debug.Log("Ha ganado el equipo rojo");
-                break;
             }
 
             // Equipo Rojo         
             // Si mueren militares rojos gana equipo azul
             if(! equipoRojo[1].EstaVivo() && ! equipoRojo[2].EstaVivo()){
                 Debug.Log("Ha ganado el equipo azul");
-                break;
             }
-            
-        }
 
 
     }
 
-    // Creacion de metodo donde se sepa si los militares están muertos
+    // Creacion de metodo donde se sepa si  están muertos
     private bool EstaMuerto(Militar m){
         return m.EstaVivo();    
     }
+
+    // Metodo bool todos muertos
+    private bool TodosMuertos(List<Unidades> u){
+        foreach(Unidades utemp in u){
+            if(utemp.EstaVivo()){
+                return false;
+            }
+        }
+        return true;
+    }
+
 
   
 

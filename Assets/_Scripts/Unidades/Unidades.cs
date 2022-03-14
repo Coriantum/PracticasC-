@@ -26,25 +26,30 @@ public abstract class Unidades : MonoBehaviour
     };
 
     public string SerAtacado(int poderAtaque){
-        vida_actual = vida_actual - poderAtaque;
-        if(vida_actual<= 0){
-            Morir();
+        if(viva){
+            vida_actual = vida_actual - poderAtaque;
+            if(vida_actual<= 0){
+                Morir();
+            }
+            return "Fui atacado con " + poderAtaque + "puntos";
+        }else{
+            return "Estoy muerto";
         }
-        return "Fui atacado con " + poderAtaque + "puntos";
+        
     }
 
-    public string Nacer(){
+    public void Nacer(){
         viva = true;
         Debug.Log("Ha nacido " + nombre);
-        return "nací";
+        //return "nací";
     }
 
 
     // Si la vida_actual = 0, destruyes el objeto
-    public string Morir(){
+    public void Morir(){
         viva = false;
         Debug.Log(nombre + " Ha muerto");
-        return "He muerto";
+        //return "He muerto";
     }
 
     public bool EstaVivo(){
