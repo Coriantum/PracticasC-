@@ -189,18 +189,17 @@ public class Main : MonoBehaviour
             //((Militar) equipoRojo[Random.Range(0,2)]).Atacar(); // Se hace cast convitiendo el elemento en militar(por defecto está en unidades)
 
 
-        int opcion = Random.Range(0,2);
+        while(EstaMuerto((Militar)equipoAzul[0]) && EstaMuerto((Militar)equipoAzul[1]) || EstaMuerto((Militar)equipoRojo[0]) && EstaMuerto((Militar)equipoRojo[1])){ // Condicion: Que no estén muertos los militares
 
-        while(EstaMuerto((Militar)equipoAzul[0]) && EstaMuerto((Militar)equipoAzul[1]) || EstaMuerto((Militar)equipoRojo[0]) && EstaMuerto((Militar)equipoRojo[1])){
+            int opcion = Random.Range(0,2); // Variable que contenga un random. Dicho random tendrá un resultado diferente cada vez que recorra el while.
 
-            
-            //Equipo azul es atacado si los rojos aun estan vivos
-            if(equipoRojo[0].EstaVivo() && equipoRojo[1].EstaVivo()){
+            //Equipo azul es atacado si los rojos aun estan vivos. Se ejecutará en caso de que la variable opcion sea la indicada 
+            if(equipoRojo[0].EstaVivo() && equipoRojo[1].EstaVivo() && opcion == 1){
                 equipoAzul[Random.Range(0,equipoAzul.Count)].SerAtacado(((Militar) equipoRojo[Random.Range(0,2)]).Atacar());
             }           
 
             //Equipo rojo es atacado si los azules estan vivos
-            if(equipoAzul[0].EstaVivo() && equipoAzul[1].EstaVivo()){
+            if(equipoAzul[0].EstaVivo() && equipoAzul[1].EstaVivo() && opcion == 0){
                 equipoRojo[Random.Range(0,equipoRojo.Count)].SerAtacado(((Militar) equipoAzul[Random.Range(0,2)]).Atacar());
             }
             
@@ -211,7 +210,6 @@ public class Main : MonoBehaviour
                 Debug.Log("Ha ganado el equipo rojo");
                 break;
             }
-
 
             // Equipo Rojo         
             // Si mueren militares rojos gana equipo azul
