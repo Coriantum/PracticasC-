@@ -188,11 +188,14 @@ public class Main : MonoBehaviour
 
             //((Militar) equipoRojo[Random.Range(0,2)]).Atacar(); // Se hace cast convitiendo el elemento en militar(por defecto está en unidades)
 
+         
+         // while(EstaMuerto((Militar)equipoAzul[0]) && EstaMuerto((Militar)equipoAzul[1]) && EstaMuerto((Militar)equipoRojo[0]) && EstaMuerto((Militar)equipoRojo[1]))
+
          // Opcion 2: Si estan todos muertos
-         // while(! TodosMuertos(equipoRojo) || ! TodosMuertos(equipoAzul))
+         // while(! TodosMuertos(equipoRojo) && ! TodosMuertos(equipoAzul))
 
         int opcion;
-        while(EstaMuerto((Militar)equipoAzul[0]) && EstaMuerto((Militar)equipoAzul[1]) && EstaMuerto((Militar)equipoRojo[0]) && EstaMuerto((Militar)equipoRojo[1])){ // Condicion: Que no estén muertos los militares
+        while(! TodosMuertos(equipoRojo) && ! TodosMuertos(equipoAzul)){ // Condicion: Que no estén muertos los militares
 
             opcion = Random.Range(0,2); // Variable que contenga un random. Dicho random tendrá un resultado diferente cada vez que recorra el while.
             Unidades defensa;
@@ -229,7 +232,7 @@ public class Main : MonoBehaviour
 
     }
 
-    // Creacion de metodo donde se sepa si  están muertos
+    // Creacion de metodo donde se sepa si militares están muertos
     private bool EstaMuerto(Militar m){
         return m.EstaVivo();    
     }
